@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>圆形文字</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box {
+      width: 100vw;
+      height: 100vh;
+      max-width: 570px;
+      max-height: 570px;
+      overflow: hidden;
+    }
+
+    .box-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .popup-click0 {
+      position: absolute;
+      left: 23%;
+      top: 22px;
+      width: 30%;
+      height: 30px;
+      /* background-color: rgba(0, 0, 0, 0.5); */
+      pointer-events: auto;
+      transform: rotate(-18deg);
+    }
+
+    .popup-click1 {
+      position: absolute;
+      left: 38%;
+      top: 22px;
+      width: 28%;
+      height: 30px;
+      /* background-color: rgba(255, 0, 0, 0.5); */
+      pointer-events: auto;
+      transform: rotate(3deg);
+    }
+
+    .popup-click2 {
+      position: absolute;
+      right: 23%;
+      top: 24px;
+      width: 30%;
+      height: 30px;
+      /* background-color: rgba(8, 221, 236, 0.5); */
+      pointer-events: auto;
+      transform: rotate(21deg);
+    }
+
+    .yuanxing5-item .popup-click0 {
+      top: 15px;
+    }
+
+    .yuanxing5-item .popup-click1 {
+      top: 4px;
+    }
+
+    .yuanxing5-item .popup-click2 {
+      top: 13px;
+    }
+
+
+    /* .popup-click:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+      } */
+
+    .yuanxing-border,
+    .yuanxing-border1,
+    .yuanxing-border2,
+    .yuanxing-border3 {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid #000;
+      pointer-events: none;
+    }
+
+    .yuanxing-border {
+      z-index: 85;
+      width: 212px;
+      height: 212px;
+    }
+
+    .yuanxing-border1 {
+      z-index: 60;
+      width: 346px;
+      height: 346px;
+      background-color: #fffbeb;
+    }
+
+    .yuanxing-border2 {
+      z-index: 60;
+      width: 404px;
+      height: 404px;
+      background-color: #fffbeb;
+    }
+
+    .yuanxing-border3 {
+      z-index: 45;
+      width: 469px;
+      height: 469px;
+      background-color: #fffbeb;
+    }
+
+    .border-text {
+      width: 40px;
+      position: absolute;
+      height: 30px;
+      border-right: 1px solid #000;
+      left: -2%;
+      top: 31%;
+      transform: rotateZ(95deg);
+    }
+
+    .yuanxingzx {
+      position: absolute;
+      z-index: 90;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background-color: #c33438;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .yuanxingzx .title {
+      line-height: 50px;
+      font-size: 25px;
+    }
+
+    .yuanxing1 {
+      position: absolute;
+      z-index: 80;
+      background-color: #fffbeb;
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      text-align: center;
+      border: 1px solid #000;
+      transform: rotate(-9deg);
+      pointer-events: none;
+    }
+
+    .yuanxing1 .span {
+      position: absolute;
+      display: inline-block;
+      left: 2px;
+      right: 2px;
+      top: 2px;
+      bottom: 2px;
+      font-size: 16px;
+      color: #000;
+      font-weight: 900;
+    }
+
+    .yuanxing2 {
+      position: absolute;
+      z-index: 70;
+      background-color: #fffbeb;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      text-align: center;
+      border: 1px solid #000;
+      transform: rotate(170deg);
+      pointer-events: none;
+    }
+
+    .yuanxing2 .span {
+      position: absolute;
+      display: inline-block;
+      left: 5px;
+      right: 5px;
+      top: 5px;
+      bottom: 5px;
+      font-size: 16px;
+      color: #000;
+      font-weight: 900;
+    }
+
+    .yuanxing3-box {
+      position: absolute;
+      z-index: 60;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid #000;
+      overflow: hidden;
+      transform: rotate(106deg);
+      pointer-events: none;
+    }
+
+    .yuanxing3-box .yuanxing3-item {
+      width: 50%;
+      height: 50%;
+      border: 1px solid #000;
+      display: flex;
+      justify-content: flex-end;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      overflow: hidden;
+      transform-origin: bottom right;
+    }
+
+    .yuanxing3-box .yuanxing3-item .yuanxing3-item-text-box {
+      width: 200%;
+      height: 200%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      transform-origin: bottom right;
+      transform: skew(-15deg, -15deg) rotate(-45deg) translate(78%, -6%);
+      text-align: center;
+      border-radius: 50%;
+    }
+
+    .yuanxing3-box .yuanxing3-item .span {
+      position: absolute;
+      display: inline-block;
+      left: 23px;
+      right: 23px;
+      top: 23px;
+      bottom: 23px;
+      font-size: 16px;
+      color: #000;
+      font-weight: 900;
+    }
+
+    .yuanxing3-box .yuanxing3-item:nth-child(1) {
+      transform: translate(-100%, -100%) rotate(60deg) skew(15deg, 15deg);
+      background-color: #e50080;
+    }
+
+    .yuanxing3-box .yuanxing3-item:nth-child(2) {
+      transform: translate(-100%, -100%) rotate(calc(2 * 60deg)) skew(15deg, 15deg);
+      background-color: #facc00;
+    }
+
+    .yuanxing3-box .yuanxing3-item:nth-child(3) {
+      transform: translate(-100%, -100%) rotate(calc(3 * 60deg)) skew(15deg, 15deg);
+      background-color: #fa6400;
+    }
+
+    .yuanxing3-box .yuanxing3-item:nth-child(4) {
+      transform: translate(-100%, -100%) rotate(calc(4 * 60deg)) skew(15deg, 15deg);
+      background-color: #0589dd;
+    }
+
+    .yuanxing3-box .yuanxing3-item:nth-child(5) {
+      transform: translate(-100%, -100%) rotate(calc(5 * 60deg)) skew(15deg, 15deg);
+      background-color: #00ab0f;
+    }
+
+    .yuanxing3-box .yuanxing3-item:nth-child(6) {
+      transform: translate(-100%, -100%) rotate(calc(6 * 60deg)) skew(15deg, 15deg);
+      background-color: #b300c1;
+    }
+
+    .yuanxing4-box {
+      position: absolute;
+      z-index: 50;
+      width: 465px;
+      height: 465px;
+      border-radius: 50%;
+      border: 1px solid #000;
+      overflow: hidden;
+      transform: rotate(241deg);
+      pointer-events: none;
+    }
+
+    .yuanxing4-box .yuanxing4-item {
+      width: 50%;
+      height: 50%;
+      border: 1px solid #000;
+      display: flex;
+      justify-content: flex-end;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      overflow: hidden;
+      transform-origin: bottom right;
+    }
+
+    .yuanxing4-box .yuanxing4-item .yuanxing4-item-text-box {
+      width: 200%;
+      height: 200%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      transform-origin: bottom right;
+      transform: skew(-15deg, -15deg) rotate(-45deg) translate(78%, -6%);
+      text-align: center;
+      border-radius: 50%;
+    }
+
+    .yuanxing4-box .yuanxing4-item .span {
+      position: absolute;
+      display: inline-block;
+      left: 23px;
+      right: 23px;
+      top: 23px;
+      bottom: 23px;
+      font-size: 14px;
+      color: #000;
+      font-weight: 900;
+    }
+
+    .yuanxing4-box .yuanxing4-item:nth-child(1) {
+      transform: translate(-100%, -100%) rotate(60deg) skew(15deg, 15deg);
+      background-color: #00ab0f;
+    }
+
+    .yuanxing4-box .yuanxing4-item:nth-child(2) {
+      transform: translate(-100%, -100%) rotate(calc(2 * 60deg)) skew(15deg, 15deg);
+      background-color: #e50080;
+    }
+
+    .yuanxing4-box .yuanxing4-item:nth-child(3) {
+      transform: translate(-100%, -100%) rotate(calc(3 * 60deg)) skew(15deg, 15deg);
+      background-color: #fa6400;
+    }
+
+    .yuanxing4-box .yuanxing4-item:nth-child(4) {
+      transform: translate(-100%, -100%) rotate(calc(4 * 60deg)) skew(15deg, 15deg);
+      background-color: #b300c1;
+    }
+
+    .yuanxing4-box .yuanxing4-item:nth-child(5) {
+      transform: translate(-100%, -100%) rotate(calc(5 * 60deg)) skew(15deg, 15deg);
+      background-color: #facc00;
+    }
+
+    .yuanxing4-box .yuanxing4-item:nth-child(6) {
+      transform: translate(-100%, -100%) rotate(calc(6 * 60deg)) skew(15deg, 15deg);
+      background-color: #0589dd;
+    }
+
+    .yuanxing5-box {
+      position: absolute;
+      z-index: 40;
+      width: 530px;
+      height: 530px;
+      border-radius: 50%;
+      text-align: center;
+      border: 1px solid #000;
+      overflow: hidden;
+      transform: rotate(203deg);
+      pointer-events: none;
+    }
+
+    .yuanxing5-box .yuanxing5-item {
+      width: 50%;
+      height: 50%;
+      border: 1px solid #000;
+      display: flex;
+      justify-content: flex-end;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      overflow: hidden;
+      transform-origin: bottom right;
+    }
+
+    .yuanxing5-box .yuanxing5-item .yuanxing5-item-text-box {
+      width: 200%;
+      height: 200%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      transform-origin: bottom right;
+      transform: skew(-19deg, -19deg) rotate(-45deg) translate(76.5%, -13.5%);
+      text-align: center;
+      border-radius: 50%;
+    }
+
+
+    .yuanxing5-box .yuanxing5-item .span {
+      position: absolute;
+      display: inline-block;
+      left: 23px;
+      right: 23px;
+      top: 23px;
+      bottom: 23px;
+      font-size: 14px;
+      color: #000;
+      font-weight: 900;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(1) {
+      transform: translate(-100%, -100%) rotate(51.43deg) skew(19deg, 19deg);
+      background-color: #fffaed;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(2) {
+      transform: translate(-100%, -100%) rotate(calc(2 * 51.43deg)) skew(19deg, 19deg);
+      background-color: #fa6400;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(3) {
+      transform: translate(-100%, -100%) rotate(calc(3 * 51.43deg)) skew(19deg, 19deg);
+      background-color: #0589dd;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(4) {
+      transform: translate(-100%, -100%) rotate(calc(4 * 51.43deg)) skew(19deg, 19deg);
+      background-color: #b300c1;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(5) {
+      transform: translate(-100%, -100%) rotate(calc(5 * 51.43deg)) skew(19deg, 19deg);
+      background-color: #e50080;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(6) {
+      transform: translate(-100%, -100%) rotate(calc(6 * 51.43deg)) skew(19deg, 19deg);
+      background-color: #facc00;
+    }
+
+    .yuanxing5-box .yuanxing5-item:nth-child(7) {
+      transform: translate(-100%, -100%) rotate(calc(7 * 51.43deg)) skew(19deg, 19deg);
+      background-color: #00ab0f;
+    }
+
+    .yuanxing-time-box {
+      position: absolute;
+      z-index: 0;
+      width: 570px;
+      height: 570px;
+      border-radius: 50%;
+      transform: rotate(-144deg);
+      /* background-color: rgba(0, 0, 0, 0.2); */
+      pointer-events: none;
+    }
+
+    .yuanxing-time-box .yuanxing-time-item1 {
+      position: absolute;
+      top: 40px;
+      left: 115px;
+      transform: rotate(-30deg);
+    }
+
+    .yuanxing-time-box .yuanxing-time-item2 {
+      position: absolute;
+      top: 15px;
+      right: 168px;
+      transform: rotate(20deg);
+    }
+
+    .yuanxing-time-box .yuanxing-time-item3 {
+      position: absolute;
+      top: 182px;
+      right: 0;
+      transform: rotate(70deg);
+    }
+
+    .yuanxing-time-box .yuanxing-time-item4 {
+      position: absolute;
+      bottom: 128px;
+      right: 29px;
+      transform: rotate(122deg);
+    }
+
+    .yuanxing-time-box .yuanxing-time-item5 {
+      position: absolute;
+      bottom: 0;
+      right: 231px;
+      transform: rotate(174deg);
+    }
+
+    .yuanxing-time-box .yuanxing-time-item6 {
+      position: absolute;
+      bottom: 76px;
+      left: 71px;
+      transform: rotate(222deg);
+    }
+
+    .yuanxing-time-box .yuanxing-time-item7 {
+      position: absolute;
+      top: 245px;
+      left: -13px;
+      transform: rotate(275deg);
+    }
+  </style>
+
+  <style>
+    .modal {
+      display: none;
+      /* 默认隐藏 */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      /* 初始透明度 */
+      transition: opacity 0.5s;
+      /* 渐变效果 */
+    }
+
+    .modal.show {
+      display: flex;
+      /* 显示弹窗 */
+      opacity: 1;
+      /* 完全可见 */
+    }
+
+    .modal-content {
+      background-color: white;
+      width: 80%;
+      height: 80%;
+      padding: 20px;
+      border-radius: 5px;
+      transform: translateY(-30px);
+      /* 初始位置向上偏移 */
+      animation: slide-in 0.3s forwards;
+      /* 进入动画 */
+    }
+
+    #modal-title {
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .modal-des-box {
+      margin-top: 20px;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.5;
+      height: calc(100% - 68px);
+    }
+
+    .close {
+      cursor: pointer;
+      float: right;
+      font-size: 30px;
+      transform: translateY(-10px);
+      user-select: none;
+    }
+
+    .xian1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2px;
+      height: 198px;
+      background-color: #404040;
+      border: 1px solid #fff;
+      z-index: 99;
+      transform-origin: top;
+    }
+
+    .xian2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2px;
+      height: 234px;
+      background-color: #ff2323;
+      border: 1px solid #fff;
+      z-index: 99;
+      transform-origin: top;
+    }
+
+    .xian3 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2px;
+      height: 265px;
+      background-color: #0838b3;
+      border: 1px solid #fff;
+      z-index: 99;
+      transform-origin: top;
+    }
+
+    .xian1 .deg,
+    .xian2 .deg,
+    .xian3 .deg {
+      position: absolute;
+      bottom: 0;
+      left: 5px;
+      font-size: 16px;
+      color: #fff;
+      text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000,
+        1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+    }
+
+    @keyframes slide-in {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slide-out {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box" class="box">
+    <div class="box-content">
+      <div id="xian1" class="xian1"></div>
+      <div id="xian2" class="xian2"></div>
+      <div id="xian3" class="xian3"></div>
+      <div id="yuanxingzx" class="yuanxingzx">
+        <h2 class="title">五运六气</h2>
+        <p id="year-text">（甲辰年）</p>
+      </div>
+      <div class="yuanxing-border"></div>
+      <div class="yuanxing-border1"></div>
+      <div class="yuanxing-border2"></div>
+      <div class="yuanxing-border3"></div>
+      <div id="yuanxing1" class="yuanxing1"></div>
+      <div id="yuanxing2" class="yuanxing2"></div>
+      <div class="yuanxing3-box">
+        <div class="yuanxing3-item">
+          <div id="yuanxing3-item1" class="yuanxing3-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing3-item">
+          <div id="yuanxing3-item2" class="yuanxing3-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing3-item">
+          <div id="yuanxing3-item3" class="yuanxing3-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing3-item">
+          <div id="yuanxing3-item4" class="yuanxing3-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing3-item">
+          <div id="yuanxing3-item5" class="yuanxing3-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing3-item">
+          <div id="yuanxing3-item6" class="yuanxing3-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="yuanxing4-box">
+        <div class="yuanxing4-item">
+          <div id="yuanxing4-item1" class="yuanxing4-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing4-item">
+          <div id="yuanxing4-item2" class="yuanxing4-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing4-item">
+          <div id="yuanxing4-item3" class="yuanxing4-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing4-item">
+          <div id="yuanxing4-item4" class="yuanxing4-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing4-item">
+          <div id="yuanxing4-item5" class="yuanxing4-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing4-item">
+          <div id="yuanxing4-item6" class="yuanxing4-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="yuanxing5-box">
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item1" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item2" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item3" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item4" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item5" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item6" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+        <div class="yuanxing5-item">
+          <div id="yuanxing5-item7" class="yuanxing5-item-text-box">
+            <div class="popup-click popup-click0" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click1" onclick="onPopup(event, this)"></div>
+            <div class="popup-click popup-click2" onclick="onPopup(event, this)"></div>
+          </div>
+        </div>
+      </div>
+      <div id="yuanxing-time" class="yuanxing-time-box">
+        <div class="yuanxing-time-item1"></div>
+        <div class="yuanxing-time-item2"></div>
+        <div class="yuanxing-time-item3"></div>
+        <div class="yuanxing-time-item4"></div>
+        <div class="yuanxing-time-item5"></div>
+        <div class="yuanxing-time-item6"></div>
+        <div class="yuanxing-time-item7"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div id="modal-content" class="modal-content">
+      <span id="close-modal" class="close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <div class="modal-des-box">
+        <div id="modal-des"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/lunar.min.js"></script>
+  <script>
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // 月份从0开始，所以要加1
+      const day = String(date.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+    window.onload = function () {
+      // https://dartpad.cn/
+      const time = [
+        "2024-01-09",
+        "2024-02-12",
+        "2024-03-12",
+        "2024-04-22",
+        "2024-05-12",
+        "2024-06-22",
+        "2024-11-25",
+      ];
+      const json = {
+        year: "甲辰",
+        start: "甲岁镇星明见敦煌太过湿土",
+        season: time,
+        first: [
+          {
+            name: "此处看何年地支起客气之循环",
+            color: "#FFFFFF",
+          },
+          {
+            name: "丑未岁太阴湿土司天金盛木衰",
+            color: "#FACC00",
+          },
+          {
+            name: "卯酉岁阳明燥金司天火盛金衰",
+            color: "#FA6400",
+          },
+          {
+            name: "辰戌岁太阳寒水司天木盛水衰",
+            color: "#0589DD",
+          },
+          {
+            name: "已亥岁厥阴风木司天火盛金衰",
+            color: "#00AB0F",
+          },
+          {
+            name: "子午岁少阴君火司天土盛木衰",
+            color: "#B300C1",
+          },
+          {
+            name: "寅申岁少阳相火司天火盛土衰",
+            color: "#E50080",
+          },
+        ],
+        second: [
+          { name: "阳明燥金本气", color: "#E50080" },
+          { name: "太阳寒水本气", color: "#FACC00" },
+          { name: "厥阴风木本气", color: "#FA6400" },
+          { name: "少阳相火本气", color: "#0589DD" },
+          { name: "少阴君火本气", color: "#00AB0F" },
+          { name: "太阴湿土本气", color: "#B300C1" },
+        ],
+        third: [
+          {
+            name: "阳明燥金本气",
+            color: "#FA6400",
+          },
+          {
+            name: "太阳寒水本气",
+            color: "#0589DD",
+          },
+          {
+            name: "厥阴风木本气",
+            color: "#00AB0F",
+          },
+          {
+            name: "少阳相火本气",
+            color: "#E50080",
+          },
+          {
+            name: "少阴君火本气",
+            color: "#B300C1",
+          },
+          {
+            name: "太阴湿土本气",
+            color: "#FACC00",
+          },
+        ],
+        end: [
+          "立春后九日客气起风木,至清明客气风木和。",
+          "清明后1天4小时 17分8秒客气起君火，至小满后八日客气君火和。",
+          "小满后8日8小时 34 分 16 秒客气起相火，至小暑后十五日客气湿土泄。",
+          "大暑后 12 小时 51 分 24秒客气起湿土，至白露后七日客气相火生。",
+          "白露后7天 17 小时8分 32 秒客气起燥金，至霜降后十四日客气燥金和。",
+          "霜降后 14 日 21 小时 25 分 40 秒客气起寒水，至冬至后七天客气寒水和。",
+          "冬至后 7天2小时 42 分 48 秒客气起风木，至次岁立春后八日客气风木和。",
+        ],
+        qiDate: [
+          { 'name': '本气', 'date': '2024-11-11 1:00:00' },
+          { 'name': '主气', 'date': '2024-11-13 5:00:00' },
+          {
+            'name': '客气',
+            'date': [
+              {
+                "begin": "2024-02-05 20:44:13",
+                "end": "2024-04-06 15:02:15"
+              },
+              {
+                "begin": "2024-04-05 19:19:23",
+                "end": "2024-05-28 20:59:29"
+              },
+              {
+                "begin": "2024-05-29 05:33:45",
+                "end": "2024-07-21 22:20:01"
+              },
+              {
+                "begin": "2024-07-23 04:35:48",
+                "end": "2024-09-14 11:11:18"
+              },
+              {
+                "begin": "2024-09-15 04:19:50",
+                "end": "2024-11-06 06:14:45"
+              },
+              {
+                "begin": "2024-11-07 03:40:25",
+                "end": "2024-12-28 17:20:32"
+              },
+              {
+                "begin": "2024-12-28 20:03:20",
+                "end": "2025-02-11 22:10:26"
+              }
+            ],
+          },
+        ],
+        // nowTime: "1987-01-01 00:00:00",
+        nowTime: "2024-01-20 08:00:00",
+      };
+      console.log(JSON.stringify(json))
+      fromFlutterMessage(JSON.stringify(json));
+      const box = document.getElementById("box");
+
+      const content = box.children[0];
+      const boxWidth = box.clientWidth;
+      const boxHeight = box.clientHeight;
+
+      // 计算缩放比例
+      const scale = Math.min(boxWidth / 575, boxHeight / 575);
+
+      // 应用缩放
+      content.style.transform = `scale(${scale})`;
+    };
+
+    /**
+     * {
+        el,
+        str,
+        degSa,
+        isBorder = false,
+        rotate = 50,
+        isFan = true,
+        des = ''
+      }
+    **/
+    function circleText(event) {
+      let element = event.el;
+      if (typeof element === "string") {
+        element = document.getElementById(element);
+      }
+      let strArr = [];
+      if (event.isFan) {
+        for (let index = 0; index < event.str.length; index++) {
+          const item = event.str[index];
+          strArr.unshift(item);
+        }
+      } else {
+        strArr = event.str.split("");
+      }
+      // 移除旧节点
+      if (element.childNodes) {
+        for (let i = 0; i < element.childNodes.length; i++) {
+          const child = element.childNodes[i];
+          if (child.nodeType === 1 && !child.classList.contains('popup-click')) {
+            element.removeChild(child);
+            i--; // 删除节点后，索引需要回退，因为节点被移除后，childNodes的长度减少
+          }
+        }
+      }
+      if (event.des) {
+        element.setAttribute("data-title", event.str || "");
+        element.setAttribute("data-des", event.des || "");
+      }
+      strArr.forEach((v, i) => {
+        let span = document.createElement("div");
+        if (event.isBorder) {
+          span.innerHTML = `<div style="transform: rotate(180deg)">${v}</div><div class="border-text"></div>`;
+        } else {
+          span.innerHTML = `<div style="transform: rotate(180deg)">${v}</div>`;
+        }
+        let deg = (i + 1) * event.degSa - (event.rotate || 50);
+        span.className = "span";
+        span.style.transform = `rotateZ(${deg}deg)`;
+        element.appendChild(span);
+      });
+    }
+
+    // 这个方法是用来给Flutter调用的（即：Flutter调用js方法）
+    function fromFlutterMessage(message) {
+      const res = JSON.parse(message);
+      console.log(res);
+      processingAngle("xian1", res.nowTime);
+      document.getElementById('xian1').onclick = function () {
+        var item = res.qiDate[0]
+        onShow(item.name, item.date, res.nowTime);
+      }
+      processingAngle("xian2", res.nowTime);
+      document.getElementById('xian2').onclick = function () {
+        var item = res.qiDate[1]
+        onShow(item.name, item.date, res.nowTime);
+      }
+      processingAngle("xian3", res.nowTime);
+      document.getElementById('xian3').onclick = function () {
+        var item = res.qiDate[2]
+        onShow(item.name, item.date, res.nowTime);
+      }
+      circleText({
+        el: "yuanxing1",
+        str: "甲卯乙辰巽巳丙午丁未坤申庚酉辛戌乾亥壬子癸丑艮寅",
+        degSa: 15,
+        isBorder: true,
+        rotate: 110,
+        isFan: false,
+      });
+      circleText({
+        el: "yuanxing2",
+        str: res.start,
+        degSa: 9,
+        isBorder: false,
+        rotate: 50,
+        isFan: true,
+      });
+      document.getElementById("year-text").innerHTML =
+        "（" + res.year + "年）";
+      for (let index = 0; index < res.first.length; index++) {
+        const el = document.getElementById(`yuanxing5-item${index + 1}`);
+        if (el) {
+          const element = res.first[index];
+          const rotate = element.name.length * 2.62;
+          circleText({
+            el: el,
+            str: element.name,
+            degSa: 4.8,
+            isBorder: false,
+            rotate: rotate,
+            isFan: true,
+            des: res.end[index],
+          });
+          const parentNode = el.parentNode;
+          parentNode.style.background = element.color;
+        }
+      }
+      for (let index = 0; index < res.second.length; index++) {
+        const el = document.getElementById(`yuanxing4-item${index + 1}`);
+        if (el) {
+          const element = res.second[index];
+          const rotate = element.name.length * 3.4;
+          circleText({
+            el: el,
+            str: element.name,
+            degSa: 6.2,
+            isBorder: false,
+            rotate: rotate,
+            isFan: true,
+          });
+          const parentNode = el.parentNode;
+          parentNode.style.background = element.color;
+        }
+      }
+
+      for (let index = 0; index < res.third.length; index++) {
+        const el = document.getElementById(`yuanxing3-item${index + 1}`);
+        if (el) {
+          const element = res.third[index];
+          const rotate = element.name.length * 3.55;
+          circleText({
+            el: el,
+            str: element.name,
+            degSa: 6.5,
+            isBorder: false,
+            rotate: rotate,
+            isFan: true,
+          });
+          const parentNode = el.parentNode;
+          parentNode.style.background = element.color;
+        }
+      }
+
+      const timeBox = document.getElementById("yuanxing-time");
+      for (let index = 0; index < res.season.length; index++) {
+        const element = res.season[index];
+        const date = new Date(element);
+        if (timeBox.children[index]) {
+          timeBox.children[index].innerHTML =
+            formatNumber(date.getMonth() + 1) +
+            "/" +
+            formatNumber(date.getDate());
+        }
+      }
+    }
+
+    function onShow(title, time, nowTime) {
+      document.getElementById("modal-title").innerHTML = title;
+      if (typeof time === 'string') {
+        document.getElementById("modal-des").innerHTML = time;
+      } else {
+        // 将时间字符串转为 Date 对象进行比较
+        const nowDate = new Date(nowTime);
+        let result = null;
+        let closestFuture = null;
+        // 查找已开始的时间段
+        for (const period of time) {
+          const beginDate = new Date(period.begin);
+          const endDate = new Date(period.end);
+          // 如果当前时间在这个时间段内，返回这个时间段
+          if (nowDate >= beginDate && nowDate <= endDate) {
+            result = period;
+            break;  // 找到已开始并有效的时间段就退出循环
+          } else if (nowDate < beginDate) {
+            // 如果当前时间早于该时间段的开始，找最近的时间段
+            if (closestFuture === null || beginDate < new Date(closestFuture.begin)) {
+              closestFuture = period;
+            }
+          }
+        }
+        if (result) {
+          document.getElementById("modal-des").innerHTML = `开始时间：${result.begin}<br />结束时间：${result.end}`;
+        } else if (closestFuture) {
+          document.getElementById("modal-des").innerHTML = `开始时间：${closestFuture.begin}<br />结束时间：${closestFuture.end}`;
+        } else {
+          document.getElementById("modal-des").innerHTML = '没有找到符合的时间段。';
+        }
+      }
+      modalContent.style.animation = "slide-in 0.2s forwards";
+      modal.classList.add("show");
+    }
+
+    function formatNumber(num) {
+      return num < 10 ? num.toString().padStart(2, "0") : num.toString();
+    }
+
+    const modal = document.getElementById("modal");
+    const openModalButton = document.getElementById("open-modal");
+    const closeModalButton = document.getElementById("close-modal");
+    const modalContent = document.getElementById("modal-content");
+
+    // 打开弹窗
+    function onPopup(event, el) {
+      const title = el.parentNode.getAttribute("data-title") || "";
+      const des = el.parentNode.getAttribute("data-des") || "";
+      console.log(el, title);
+      if (des) {
+        document.getElementById("modal-title").innerHTML = title;
+        document.getElementById("modal-des").innerHTML = des;
+        modalContent.style.animation = "slide-in 0.2s forwards";
+        modal.classList.add("show");
+      }
+    }
+
+    // 关闭弹窗
+    closeModalButton.addEventListener("click", closeModal);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    function closeModal() {
+      modalContent.style.animation = "slide-out 0.2s forwards"; // 退出动画
+      setTimeout(() => {
+        modal.classList.remove("show");
+      }, 300); // 等待动画结束后再隐藏
+    }
+
+    function processingAngle(el, time) {
+
+      const dom = document.getElementById(el);
+      let deg = 0;
+      let deg1 = 0;
+      const date = new Date(time);
+      // var d = Lunar.fromYmd(2018, date.getMonth() + 1, date.getDate());
+      // var jieQi = d.getJieQiTable();
+      // jieQi['大寒'].toYmdHms()
+      if (el === "xian1") {
+        // 本气 
+        deg = getAngleForDay({
+          date: time,
+          startAngle: 32,
+          totalCircles: 1,
+          totalAngle: 360,
+        }).res;
+        deg1 = getAngleForDay({
+          date: time,
+          startAngle: 0,
+          totalCircles: 1,
+        }).res1;
+      } else if (el === "xian2") {
+        // 主气
+        const date1 = new Date(time);
+        date1.setDate(date1.getDate() + 15);
+        deg = getAngleForDay({
+          date: formatDate(date1),
+          // startAngle: 39,
+          startAngle: 32,
+          totalCircles: 1,
+          totalAngle: 360,
+        }).res;
+        deg1 = getAngleForDay({
+          date: formatDate(date1),
+          startAngle: 0,
+          totalCircles: 1,
+        }).res1;
+      } else if (el === "xian3") {
+        // 客气
+        const date1 = new Date(time);
+        date1.setDate(date1.getDate() + 24);
+        deg = getAngleForDay({
+          date: formatDate(date1),
+          startAngle: 32,
+          totalCircles: 1,
+          totalAngle: 360,
+        }).res;
+        deg1 = getAngleForDay({
+          date: formatDate(date1),
+          startAngle: 0,
+          totalCircles: 1,
+        }).res1;
+      }
+      dom.style.transform = `rotate(${deg}deg)`;
+      dom.innerHTML = '<div class="deg">' + Number(deg1).toFixed(1) + "</div>";
+    }
+
+    /**
+     *
+     * @param date 计算日期
+     * @param startAngle 初始角度
+     * @param totalCircles 总圈数
+     * @param totalAngle 转动基数不传默认365.5  一圈360度(代码) 365.5(求出平均转动的角度)
+     * @returns
+     */
+    function getAngleForDay(event) {
+      const totalDaysInYear = 365.5; // 一年的天数
+      const totalAngle = event.totalAngle || totalDaysInYear; // 一圈360度(代码) 365.5(求出平均转动的角度)
+      const totalRotation = totalAngle / event.totalCircles; // 总旋转角度
+      // 计算每天转出的角度
+      const dailyRotation = totalRotation / totalDaysInYear;
+
+      // 获取当前日期与起始日期之间的天数差
+      const inputDate = new Date(event.date); // 传入的日期
+      var d = Lunar.fromDate(inputDate);
+      var jieQi = d.getJieQiTable();
+      console.log(jieQi['大寒'], jieQi['大寒'].toString(), jieQi['大寒'].toYmdHms());
+
+      // const startDate = new Date(inputDate.getFullYear() + "-01-20 00:00:00"); // 起始日期（例如2024年1月1日）
+      const startDate = new Date(jieQi['大寒'].toYmdHms()); // 起始日期每年大寒1月20号（例如2024年1月20日）
+
+      // 计算日期之间的天数差（1000毫秒 = 1秒，3600秒 = 1小时，24小时 = 1天）
+      const timeDiff = inputDate - startDate; // 获取时间差（以毫秒为单位）
+      const dayDiff = timeDiff / (1000 * 3600 * 24); // 转换为天数
+      // 计算该日期的角度
+      const data = dailyRotation * dayDiff;
+      const angle = event.startAngle + data;
+      // const angle = 30.8 + data;
+      const res = (angle % totalAngle).toFixed(3);
+      console.log(`在日期 ${event.date} 的角度：${res}度，结果${data}`);
+      let res1 = Math.round(data > totalAngle ? totalAngle : data);
+      if (res1 < 0) {
+        res1 = totalAngle - res1;
+      }
+      return {
+        res: res,
+        res1: res1,
+      };
+    }
+
+  </script>
+</body>
+
+</html>

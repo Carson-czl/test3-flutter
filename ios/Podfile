@@ -1,0 +1,6 @@
+target 'Runner' do
+    flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+    # Add the library of permissions you need here
+    pod 'EasyPermissionX/Camera'
+    pod 'EasyPermissionX/Photo'
+  end
