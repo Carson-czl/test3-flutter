@@ -268,29 +268,31 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
           color: ThemeScheme.color(const Color(0xfff0f1f3)),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                ValueListenableBuilder(
-                  valueListenable: selectAddAccount,
-                  builder: (context, content, _) {
-                    return Text(
+            child: ValueListenableBuilder(
+              valueListenable: selectAddAccount,
+              builder: (context, content, _) {
+                return Column(
+                  children: <Widget>[
+                    Text(
                       content.isEmpty
                           ? context.l10n.pleaseSelectAnAccount
-                          : context.l10n.addingCountAccountToAccount('aa', content.length),
+                          : context.l10n.addingCountAccountToAccount(
+                              'aa', content.length),
                       style: TextStyle(
                         color: ThemeScheme.getLightBlack(),
                         fontSize: 12,
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 10),
-                customButton(
-                  context,
-                  onPressed: onAddAccount,
-                  title: context.l10n.confirm,
-                ),
-              ],
+                    ),
+                    const SizedBox(height: 10),
+                    customButton(
+                      context,
+                      onPressed: onAddAccount,
+                      title: context.l10n.confirm,
+                      disabled: content.isEmpty,
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -464,7 +466,7 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          '钱包标识符',
+                          context.l10n.walletIdentifier,
                           style: TextStyle(
                             fontSize: 14,
                             color: ThemeScheme.getBlack(),
@@ -473,9 +475,7 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                         const SizedBox(width: 15),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () {
-                              Common.clipboard(walletKey);
-                            },
+                            onTap: () => Common.clipboard(walletKey),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -508,8 +508,8 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                     rightIconShow: false,
                     borderWidth: 0,
                   ),
-                  const MyListItem(
-                    title: '来源',
+                   MyListItem(
+                    title: context.l10n.source,
                     extra: "通过助记词创建",
                     rightIconShow: false,
                     borderWidth: 0,

@@ -48,7 +48,7 @@ class _MyRouterState extends State<MyRouter> {
   // }
 
   final Map<String, WidgetBuilder> router = {
-    '/': (BuildContext context) => const OpenScreenPage(),
+    // '/': (BuildContext context) => const OpenScreenPage(),
     '/initWallet': (BuildContext context) => const InitWalletPage(),
     '/webView': (BuildContext context) => const WebViewPage(),
     '/home': (BuildContext context) => const HomeTabBar(),

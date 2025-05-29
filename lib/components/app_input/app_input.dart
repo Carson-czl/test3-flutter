@@ -239,7 +239,10 @@ class AppInputTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    // 只允许数字、小数点、负号
+    if (newValue.text.startsWith('-')) {
+      return oldValue;
+    }
+    // 只允许数字、小数点，不允许负号
     if (newValue.text.isEmpty) {
       return newValue;
     }

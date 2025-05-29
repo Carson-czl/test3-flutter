@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:web_wallet/common/widget/custom_app_bar.dart';
 import 'package:web_wallet/common/widget/custom_button.dart';
+import 'package:web_wallet/common/widget/custom_dialog.dart';
 import 'package:web_wallet/common/widget/custom_icons.dart';
 import 'package:web_wallet/common/widget/theme_scheme.dart';
 import 'package:web_wallet/components/app_input/app_input.dart';
+import 'package:web_wallet/components/payment_keyboard/payment_keyboard.dart';
 import 'package:web_wallet/config/app_localizations.dart';
 import 'package:web_wallet/config/global_config.dart';
 import 'package:web_wallet/stores/app_settings.dart';
@@ -29,8 +30,8 @@ class TransferAccountsPage extends StatefulWidget {
 
 class _TransferAccountsPageState extends State<TransferAccountsPage> {
   String walletName = 'TRX';
-  String transferAddress = '';
-  String transferMoney = '';
+  String transferAddress = '1';
+  String transferMoney = '1';
   String transferRemarks = '';
   bool showServiceChargeDetails = false;
 
@@ -53,13 +54,37 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
     super.initState();
   }
 
+  void onConfirm() {
+    double money = double.tryParse(transferMoney) ?? 0;
+    if (money <= 0) {
+      CustomDialog.alert(
+        context,
+        content: '账户余额不足以支付转账和矿工费',
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        enableDrag: false,
+        backgroundColor: Colors.transparent,
+        builder: (context) => PaymentKeyboard(
+          onCompleted: (password) {
+            Navigator.pop(context);
+            // 处理密码
+            print('输入的密码: $password');
+          },
+        ),
+      );
+    }
+  }
+
   /// 收款地址
   List<Widget> paymentAddress() {
     return [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: Text(
-          "收款地址",
+          context.l10n.receivingAddress,
           style: TextStyle(
             color: ThemeScheme.getLightBlack(),
           ),
@@ -73,7 +98,7 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
         ),
         child: AppInput(
           key: addressKey,
-          hintText: "$walletName 地址",
+          hintText: "$walletName ${context.l10n.address}",
           minLines: 1,
           maxLines: 4,
           rightIconWidget: GestureDetector(
@@ -108,7 +133,7 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
       Padding(
         padding: const EdgeInsets.only(left: 10, top: 20, bottom: 8),
         child: Text(
-          "矿工费",
+          context.l10n.gasFee,
           style: TextStyle(
             color: ThemeScheme.getLightBlack(),
           ),
@@ -168,7 +193,7 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
     return Scaffold(
       appBar: customAppBar(
         context,
-        title: "$walletName 转账",
+        title: "$walletName ${context.l10n.transfer}",
         backgroundColor: ThemeScheme.color(const Color(0xfff0f1f3)),
         rightBtn: <Widget>[
           IconButton(
@@ -195,7 +220,7 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "数量",
+                    context.l10n.amount,
                     style: TextStyle(
                       color: ThemeScheme.getLightBlack(),
                     ),
@@ -219,8 +244,8 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   AppInput(
+                    maxLength: 12,
                     hintText: "0",
-                    maxLength: 8,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
@@ -232,7 +257,6 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
                       height: 1,
                     ),
                     onChanged: (value) {
-                      print(value);
                       setState(() {
                         transferMoney = value;
                       });
@@ -240,12 +264,9 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
                   ),
                   Consumer<AppSettingsStore>(
                     builder: (context, store, child) {
-                      String str = '';
-                      if (transferMoney != '') {
-                        double money = 0;
-                        try {
-                          money = double.parse(transferMoney);
-                        } catch (error) {}
+                      String str = "";
+                      double money = double.tryParse(transferMoney) ?? 0;
+                      if (money > 0) {
                         str =
                             "${AppLocalizationsConfig.currencyUnitInfo[store.appCurrency]} ${AppLocalizationsConfig.currencyCalc(money)}";
                       }
@@ -262,7 +283,7 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
                   ),
                   const SizedBox(height: 8),
                   AppInput(
-                    hintText: "备注",
+                    hintText: context.l10n.remark,
                     maxLength: 100,
                     maxLines: 4,
                     counterText: '${transferRemarks.length}/100',
@@ -288,7 +309,7 @@ class _TransferAccountsPageState extends State<TransferAccountsPage> {
             context,
             title: context.l10n.next,
             disabled: transferAddress == '' || transferMoney == '',
-            onPressed: () {},
+            onPressed: onConfirm,
           ),
         ),
       ),

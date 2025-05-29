@@ -42,6 +42,40 @@ class CustomDialog {
     );
   }
 
+  /// 提示确认弹窗
+  static void alert(
+    BuildContext context, {
+    String? title,
+    String? content,
+    bool canPop = true, // 是否屏蔽安卓返回true不拦截
+    String? confirmText,
+    bool barrierDismissible = false,
+    void Function()? onSuccess,
+    PopInvokedWithResultCallback<bool>?
+        onPopInvokedWithResult, // canPop=false时候拦截触发
+  }) {
+    customContent(
+      context,
+      title: title,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: Text(
+          content ?? "",
+          style: TextStyle(
+            color: ThemeScheme.getLightBlack(),
+            fontSize: 14,
+          ),
+        ),
+      ),
+      canPop: canPop,
+      showCancel: false,
+      confirmText: confirmText,
+      barrierDismissible: barrierDismissible,
+      onSuccess: onSuccess,
+      onPopInvokedWithResult: onPopInvokedWithResult,
+    );
+  }
+
   /// 自定义内容
   static void customContent(
     BuildContext context, {

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:web_wallet/common/widget/theme_scheme.dart';
 import 'list_view_status.dart';
 

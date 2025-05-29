@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class LanguageInfoParma {
   String label;
@@ -53,10 +54,12 @@ class AppLocalizationsConfig {
     "USD": "\$",
     "CNY": "￥",
   };
+
   /// 计算币种换算
-  static num currencyCalc(num value)  {
-    return value;
+  static String currencyCalc(num value, {int decimal = 2}) {
+    return NumberFormat.decimalPatternDigits(
+      locale: 'en_US',
+      decimalDigits: decimal,
+    ).format(value);
   }
-
-
 }

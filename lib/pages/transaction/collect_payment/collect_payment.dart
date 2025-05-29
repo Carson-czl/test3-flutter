@@ -15,7 +15,6 @@ class CollectPaymentPage extends StatefulWidget {
 }
 
 class _CollectPaymentPageState extends State<CollectPaymentPage> {
-  String tipInfo = "仅支持Tron资产（TRC10/TRC20）";
   String walletAddress =
       "123asdd123asdd123asdd123asdd123asdd123asdd123asdd123asdd";
 
@@ -70,7 +69,7 @@ class _CollectPaymentPageState extends State<CollectPaymentPage> {
           Container(
             width: double.maxFinite,
             margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
@@ -82,10 +81,11 @@ class _CollectPaymentPageState extends State<CollectPaymentPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  tipInfo,
+                  context.l10n
+                      .onlySupportsAssetsAgreement('（TRC10/TRC20）', 'Tron'),
                   style: const TextStyle(
                     color: Color(0xff2b2e30),
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -99,9 +99,7 @@ class _CollectPaymentPageState extends State<CollectPaymentPage> {
                 ),
                 const SizedBox(height: 15),
                 GestureDetector(
-                  onTap: () {
-                    Common.clipboard(walletAddress);
-                  },
+                  onTap: () => Common.clipboard(walletAddress),
                   child: Text(
                     walletAddress,
                     textAlign: TextAlign.center,
